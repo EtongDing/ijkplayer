@@ -21,6 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * ijk基于ffplayer的二次封装
+ * */
 #include "ijkplayer.h"
 #include "ijkplayer_internal.h"
 #include "ijkversion.h"
@@ -694,6 +701,15 @@ void *ijkmp_set_weak_thiz(IjkMediaPlayer *mp, void *weak_thiz)
     return prev_weak_thiz;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 从消息队列msg_queue获取消息AVMessage *msg
+ * 返回int成功与否结果，0为成功，小于0为各种错误码
+ *
+ * */
 /* need to call msg_free_res for freeing the resouce obtained in msg */
 int ijkmp_get_msg(IjkMediaPlayer *mp, AVMessage *msg, int block)
 {
