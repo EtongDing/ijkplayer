@@ -49,6 +49,13 @@
     JNI_CHECK_GOTO((retval != EIJK_OUT_OF_MEMORY), env, "java/lang/OutOfMemoryError", NULL, label); \
     JNI_CHECK_GOTO((retval == 0), env, JNI_IJK_MEDIA_EXCEPTION, NULL, label);
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * Java虚拟机静态引用
+ * */
 static JavaVM* g_jvm;
 
 typedef struct player_fields_t {
@@ -60,6 +67,13 @@ static player_fields_t g_clazz;
 static int inject_callback(void *opaque, int type, void *data, size_t data_size);
 static bool mediacodec_select_callback(void *opaque, ijkmp_mediacodecinfo_context *mcc);
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 获取IjkMediaPlayer实例
+ * */
 static IjkMediaPlayer *jni_get_media_player(JNIEnv* env, jobject thiz)
 {
     pthread_mutex_lock(&g_clazz.mutex);
@@ -73,6 +87,13 @@ static IjkMediaPlayer *jni_get_media_player(JNIEnv* env, jobject thiz)
     return mp;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 设置IjkMediaPlayer实例
+ * */
 static IjkMediaPlayer *jni_set_media_player(JNIEnv* env, jobject thiz, IjkMediaPlayer *mp)
 {
     pthread_mutex_lock(&g_clazz.mutex);
@@ -93,6 +114,13 @@ static IjkMediaPlayer *jni_set_media_player(JNIEnv* env, jobject thiz, IjkMediaP
     return old;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 设置播放路径
+ * */
 static int64_t jni_set_media_data_source(JNIEnv* env, jobject thiz, jobject media_data_source)
 {
     int64_t nativeMediaDataSource = 0;
@@ -147,8 +175,16 @@ fail:
     return nativeAndroidIO;
 }
 
+
 static int message_loop(void *arg);
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 设置播放路径with请求头
+ * */
 static void
 IjkMediaPlayer_setDataSourceAndHeaders(
     JNIEnv *env, jobject thiz, jstring path,
@@ -197,6 +233,13 @@ LABEL_RETURN:
     ijkmp_dec_ref_p(&mp);
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 设置播放路径withCallback
+ * */
 static void
 IjkMediaPlayer_setDataSourceCallback(JNIEnv *env, jobject thiz, jobject callback)
 {
@@ -240,6 +283,13 @@ LABEL_RETURN:
     ijkmp_dec_ref_p(&mp);
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 设置视频渲染View
+ * */
 static void
 IjkMediaPlayer_setVideoSurface(JNIEnv *env, jobject thiz, jobject jsurface)
 {
@@ -254,6 +304,13 @@ LABEL_RETURN:
     return;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 播放前的各种初始化工作
+ * */
 static void
 IjkMediaPlayer_prepareAsync(JNIEnv *env, jobject thiz)
 {
@@ -269,6 +326,13 @@ LABEL_RETURN:
     ijkmp_dec_ref_p(&mp);
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ *  开始播放
+ * */
 static void
 IjkMediaPlayer_start(JNIEnv *env, jobject thiz)
 {
@@ -282,6 +346,13 @@ LABEL_RETURN:
     ijkmp_dec_ref_p(&mp);
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 停止播放
+ * */
 static void
 IjkMediaPlayer_stop(JNIEnv *env, jobject thiz)
 {
@@ -294,6 +365,13 @@ LABEL_RETURN:
     ijkmp_dec_ref_p(&mp);
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 暂停播放
+ * */
 static void
 IjkMediaPlayer_pause(JNIEnv *env, jobject thiz)
 {
@@ -306,6 +384,13 @@ LABEL_RETURN:
     ijkmp_dec_ref_p(&mp);
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 相当于拖动动作，视频跳转到相应的时间
+ * */
 static void
 IjkMediaPlayer_seekTo(JNIEnv *env, jobject thiz, jlong msec)
 {
@@ -319,6 +404,13 @@ LABEL_RETURN:
     ijkmp_dec_ref_p(&mp);
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 获取播放器状态，是否正在播放
+ * */
 static jboolean
 IjkMediaPlayer_isPlaying(JNIEnv *env, jobject thiz)
 {
@@ -333,6 +425,13 @@ LABEL_RETURN:
     return retval;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ *  获取当前播放的时间点
+ * */
 static jlong
 IjkMediaPlayer_getCurrentPosition(JNIEnv *env, jobject thiz)
 {
@@ -347,6 +446,13 @@ LABEL_RETURN:
     return retval;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 获取视频的时长
+ * */
 static jlong
 IjkMediaPlayer_getDuration(JNIEnv *env, jobject thiz)
 {
@@ -361,6 +467,13 @@ LABEL_RETURN:
     return retval;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ *  播放器的释放
+ * */
 static void
 IjkMediaPlayer_release(JNIEnv *env, jobject thiz)
 {
@@ -381,7 +494,16 @@ IjkMediaPlayer_release(JNIEnv *env, jobject thiz)
     ijkmp_dec_ref_p(&mp);
 }
 
+
 static void IjkMediaPlayer_native_setup(JNIEnv *env, jobject thiz, jobject weak_this);
+
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ *  播放器重置
+ * */
 static void
 IjkMediaPlayer_reset(JNIEnv *env, jobject thiz)
 {
@@ -398,6 +520,13 @@ IjkMediaPlayer_reset(JNIEnv *env, jobject thiz)
     ijkmp_dec_ref_p(&mp);
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 设置播放器重播次数
+ * */
 static void
 IjkMediaPlayer_setLoopCount(JNIEnv *env, jobject thiz, jint loop_count)
 {
@@ -411,6 +540,13 @@ LABEL_RETURN:
     ijkmp_dec_ref_p(&mp);
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ *  获取重播次数
+ * */
 static jint
 IjkMediaPlayer_getLoopCount(JNIEnv *env, jobject thiz)
 {
@@ -426,6 +562,13 @@ LABEL_RETURN:
     return loop_count;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 根据id获取视频相关信息，帧率等等
+ * */
 static jfloat
 ijkMediaPlayer_getPropertyFloat(JNIEnv *env, jobject thiz, jint id, jfloat default_value)
 {
@@ -440,6 +583,13 @@ LABEL_RETURN:
     return value;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 根据id设置视频相关信息
+ * */
 static void
 ijkMediaPlayer_setPropertyFloat(JNIEnv *env, jobject thiz, jint id, jfloat value)
 {
@@ -498,6 +648,13 @@ LABEL_RETURN:
     return;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 播放器设置音量
+ * */
 static void
 IjkMediaPlayer_setVolume(JNIEnv *env, jobject thiz, jfloat leftVolume, jfloat rightVolume)
 {
@@ -511,6 +668,13 @@ LABEL_RETURN:
     ijkmp_dec_ref_p(&mp);
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 获取音频Id
+ * */
 static jint
 IjkMediaPlayer_getAudioSessionId(JNIEnv *env, jobject thiz)
 {
@@ -526,6 +690,13 @@ LABEL_RETURN:
     return audio_session_id;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 播放器设置参数
+ * */
 static void
 IjkMediaPlayer_setOption(JNIEnv *env, jobject thiz, jint category, jobject name, jobject value)
 {
@@ -572,6 +743,13 @@ LABEL_RETURN:
     ijkmp_dec_ref_p(&mp);
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 获取颜色格式名字
+ * */
 static jstring
 IjkMediaPlayer_getColorFormatName(JNIEnv *env, jclass clazz, jint mediaCodecColorFormat)
 {
@@ -582,6 +760,13 @@ IjkMediaPlayer_getColorFormatName(JNIEnv *env, jclass clazz, jint mediaCodecColo
     return (*env)->NewStringUTF(env, codec_name);
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 获取视频相关信息
+ * */
 static jstring
 IjkMediaPlayer_getVideoCodecInfo(JNIEnv *env, jobject thiz)
 {
@@ -605,6 +790,13 @@ LABEL_RETURN:
     return jcodec_info;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 获取音频相关信息
+ * */
 static jstring
 IjkMediaPlayer_getAudioCodecInfo(JNIEnv *env, jobject thiz)
 {
@@ -636,6 +828,7 @@ inline static void fillMetaInternal(JNIEnv *env, jobject jbundle, IjkMediaMeta *
 
     J4AC_Bundle__putString__withCString__catchAll(env, jbundle, key, value);
 }
+
 
 static jobject
 IjkMediaPlayer_getMediaMeta(JNIEnv *env, jobject thiz)
@@ -735,11 +928,19 @@ LABEL_RETURN:
     return jret_bundle;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 初始化
+ * */
 static void
 IjkMediaPlayer_native_init(JNIEnv *env)
 {
     MPTRACE("%s\n", __func__);
 }
+
 
 static void
 IjkMediaPlayer_native_setup(JNIEnv *env, jobject thiz, jobject weak_this)
@@ -873,6 +1074,13 @@ fail:
     return found_codec_name;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 向java post消息的方法
+ * */
 inline static void post_event(JNIEnv *env, jobject weak_this, int what, int arg1, int arg2)
 {
     // MPTRACE("post_event(%p, %p, %d, %d, %d)", (void*)env, (void*) weak_this, what, arg1, arg2);
@@ -887,6 +1095,13 @@ inline static void post_event2(JNIEnv *env, jobject weak_this, int what, int arg
     // MPTRACE("post_event2()=void");
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 消息循环读取线程
+ * */
 static void message_loop_n(JNIEnv *env, IjkMediaPlayer *mp)
 {
     jobject weak_thiz = (jobject) ijkmp_get_weak_thiz(mp);
@@ -996,6 +1211,13 @@ LABEL_RETURN:
     ;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 消息线程前的一些参数安全性检测
+ * */
 static int message_loop(void *arg)
 {
     MPTRACE("%s\n", __func__);
@@ -1066,6 +1288,13 @@ IjkMediaPlayer_native_profileEnd(JNIEnv *env, jclass clazz)
     ALOGD("moncleanup\n");
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 日志等级设置
+ * */
 static void
 IjkMediaPlayer_native_setLogLevel(JNIEnv *env, jclass clazz, jint level)
 {
@@ -1085,6 +1314,13 @@ LABEL_RETURN:
     return;
 }
 
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 抓取一个时间段内的帧，以图片形式存入手机
+ * */
 static void
 IjkMediaPlayer_setFrameAtTime(JNIEnv *env, jobject thiz, jstring path, jlong start_time, jlong end_time, jint num, jint definition) {
     IjkMediaPlayer *mp = jni_get_media_player(env, thiz);
@@ -1109,7 +1345,13 @@ LABEL_RETURN:
 
 
 // ----------------------------------------------------------------------------
-
+/**
+ * Etong
+ *
+ * 功能：JNI，Java与C之间的通讯
+ *
+ * 用于注册函数到JVM的数组，{Java对应函数名，函数形参，JNI对应函数名}
+ * */
 static JNINativeMethod g_methods[] = {
     {
         "_setDataSource",
