@@ -1,5 +1,6 @@
 #ijkplayer
 forked from Bilibili/ijkplayer
+
 ###查看步骤
 	clone https://github.com/EtongDing/ijkplayer.git
 	git checkout learning
@@ -21,3 +22,5 @@ forked from Bilibili/ijkplayer
 [FFmpeg关键结构体](http://note.youdao.com/noteshare?id=b443321050b6989ddfda0e63aedc2c65)
 
 [IjkPlayer关键结构体](http://note.youdao.com/noteshare?id=02b821d933e8dbb0dcdfdc79646b980f)
+
+
