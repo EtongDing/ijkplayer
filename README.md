@@ -2,11 +2,11 @@
 forked from Bilibili/ijkplayer
 
 
-###查看步骤
+# # # 查看步骤
 	clone https://github.com/EtongDing/ijkplayer.git
 	git checkout learning
 	
-###注释说明
+# # # 注释说明
 关键词  | 功能
 ------------- | -------------
 功能：JNI，Java与C之间的通讯 | JNI，Java与C之间的通讯
