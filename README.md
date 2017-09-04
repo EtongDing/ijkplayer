@@ -1,9 +1,9 @@
-####查看步骤
+#### 查看步骤
 
 	clone https://github.com/EtongDing/ijkplayer.git
 	git checkout learning
 	
-####注释说明
+#### 注释说明
 
 关键词  | 功能
 ------------- | -------------
@@ -14,11 +14,11 @@
 功能：音频输出 | 音频输出
 功能：解码  | 解码模块
 
-####流程图
+#### 流程图
 
 ![](https://github.com/EtongDing/ijkplayer/blob/learning/ijkPlayer%E6%B5%81%E7%A8%8B%E5%9B%BE.png?raw=true)
 
-####关键结构体
+#### 关键结构体
 
 [FFmpeg关键结构体](http://note.youdao.com/noteshare?id=b443321050b6989ddfda0e63aedc2c65)
 
