@@ -2503,7 +2503,17 @@ reload:
     return resampled_data_size;
 }
 
-/* prepare a new audio buffer */
+/**
+ * Etong
+ *
+ * 功能：音频输出
+ *
+ * @param opaque: FFPlayer结构体
+ * @param stream: 音频数据数组，给sdl渲染
+ * @param len   : 音频数据数组长度
+ *
+ * prepare a new audio buffer
+ * */
 static void sdl_audio_callback(void *opaque, Uint8 *stream, int len)
 {
     FFPlayer *ffp = opaque;
@@ -2532,8 +2542,16 @@ static void sdl_audio_callback(void *opaque, Uint8 *stream, int len)
     }
 
     while (len > 0) {
+        /**上一个数据包解码的数据是否已完全输出.
+         * is->audio_buf_index,上一个数据包已输出偏移量
+         * is->audio_buf_size，上一个数据包解析出来的总大小
+         * */
         if (is->audio_buf_index >= is->audio_buf_size) {
-           audio_size = audio_decode_frame(ffp);
+           /**音频解码，
+            * is->audio_buf，解码后的数据包起始地址
+            * 返回解码数据包的大小
+            * */
+           audio_size = audio_decode_frame(ffp);//音频解码
            if (audio_size < 0) {
                 /* if error, just output silence */
                is->audio_buf = NULL;
@@ -2553,19 +2571,20 @@ static void sdl_audio_callback(void *opaque, Uint8 *stream, int len)
             SDL_AoutFlushAudio(ffp->aout);
             break;
         }
+        //len1,得到这次需要由is->audio_buf写入stream的长度。
         len1 = is->audio_buf_size - is->audio_buf_index;
-        if (len1 > len)
+        if (len1 > len)//如果len1大于len，则写入len的长度，剩余的长度下一下写入
             len1 = len;
         if (!is->muted && is->audio_buf && is->audio_volume == SDL_MIX_MAXVOLUME)
-            memcpy(stream, (uint8_t *)is->audio_buf + is->audio_buf_index, len1);
+            memcpy(stream, (uint8_t *)is->audio_buf + is->audio_buf_index, len1);//copy is->audio_buf 入stream
         else {
             memset(stream, 0, len1);
             if (!is->muted && is->audio_buf)
                 SDL_MixAudio(stream, (uint8_t *)is->audio_buf + is->audio_buf_index, len1, is->audio_volume);
         }
-        len -= len1;
-        stream += len1;
-        is->audio_buf_index += len1;
+        len -= len1;//计算stream剩余可写的长度
+        stream += len1;//stream下一次写入的其实地址
+        is->audio_buf_index += len1;//is->audio_buf已copy入stream的偏移量
     }
     is->audio_write_buf_size = is->audio_buf_size - is->audio_buf_index;
     /* Let's assume the audio driver that is used by SDL has two periods. */
